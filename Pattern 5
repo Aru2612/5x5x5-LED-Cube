@@ -1,4 +1,4 @@
-//Bipyramid
+//Bipyramid 
 
 //FOR ANODE
 int clock_1 = 1; //IC Pin 11
