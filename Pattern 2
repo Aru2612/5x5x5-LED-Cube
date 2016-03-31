@@ -1,5 +1,5 @@
 /*Working
-/*Each layer should light up one at a time from top to bottom*/
+/*Each layer should light up one at a time from top to bottom*/ 
 //FOR ANODE
 int clock_1 = 1; //IC Pin 11
 int latch_1 = 2; //IC Pin 12
