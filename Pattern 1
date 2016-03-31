@@ -1,4 +1,4 @@
-/*All LEDs should lit up*/
+/*All LEDs should lit up*/ 
 //FOR ANODE
 int clock_1 = 1; //IC Pin 11
 int latch_1 = 2; //IC Pin 12
