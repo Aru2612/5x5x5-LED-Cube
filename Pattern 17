@@ -1,0 +1,86 @@
+//FOR ANODE
+int clock_1 = 1; //IC Pin 11
+int latch_1 = 2; //IC Pin 12
+int data_1 = 3; //IC Pin 14
+//FOR CATHODE
+int clock_2 = 8; //IC Pin 11
+int latch_2 = 9; //IC Pin 12
+int data_2 = 10; //IC Pin 14
+
+byte shift_4[][5]={{B00000001},
+                 {B00000000,B00000000,B00000000,B00000000,B00000001},
+                 {B00000000},
+                 {B00000001,B00000000,B00000000,B00000000,B00000000}
+                };
+byte shift_3[][5]={{B11111111},
+                  {B00010000,B00100001,B01000010,B10000100,B00001000},
+                  {B01000010},
+                  {B00001000,B10000100,B01000010,B00100001,B00010000}
+                };
+byte shift_2[][5]={{B11111111},
+                  {B10000100,B00001000,B00010000,B00100001,B01000010},
+                  {B00010000},
+                  {B01000010,B00100001,B00010000,B00001000,B10000100}
+                };
+byte shift_1[][5]={{B11111111},
+                  {B00100001,B01000010,B10000100,B00001000,B00010000},
+                  {B10000100},
+                  {B00010000,B00001000,B10000100,B01000010,B00100001}
+                };
+
+byte gnd[][5]={ {B00000100},
+             {B00000001,B00000010,B00000100,B00001000,B00010000},
+             {B00011111},
+             {B00000001,B00000010,B00000100,B00001000,B00010000}
+           
+};
+
+void setup() {
+pinMode(latch_1, OUTPUT);
+pinMode(clock_1, OUTPUT);
+pinMode(data_1, OUTPUT);
+pinMode(latch_2, OUTPUT);
+pinMode(clock_2, OUTPUT);
+pinMode(data_2, OUTPUT);
+}
+
+
+void loop() 
+{
+
+for(int i=0;i<4;i++)
+{
+if(i==0||i==2)
+{
+digitalWrite(latch_1, LOW);
+digitalWrite(latch_2, LOW);
+shiftOut(data_1, clock_1, MSBFIRST, shift_4[i][0]);
+shiftOut(data_1, clock_1, MSBFIRST, shift_3[i][0]);
+shiftOut(data_1, clock_1, MSBFIRST, shift_2[i][0]);
+shiftOut(data_1, clock_1, MSBFIRST, shift_1[i][0]);
+shiftOut(data_2, clock_2, MSBFIRST, gnd[i][0]);
+digitalWrite(latch_1, HIGH);
+digitalWrite(latch_2, HIGH);
+delay(300);
+}
+else
+{
+  for(int k=0;k<10;k++)
+  {
+  for(int j=0;j<5;j++)
+  {
+digitalWrite(latch_1, LOW);
+digitalWrite(latch_2, LOW);
+shiftOut(data_1, clock_1, MSBFIRST, shift_4[i][j]);
+shiftOut(data_1, clock_1, MSBFIRST, shift_3[i][j]);
+shiftOut(data_1, clock_1, MSBFIRST, shift_2[i][j]);
+shiftOut(data_1, clock_1, MSBFIRST, shift_1[i][j]);
+shiftOut(data_2, clock_2, MSBFIRST, gnd[i][j]);
+digitalWrite(latch_1, HIGH);
+digitalWrite(latch_2, HIGH);
+delayMicroseconds(3000);
+  }
+  }
+}
+}
+}
