@@ -1,0 +1,81 @@
+//RITU (Vertical)
+
+//FOR ANODE
+int clock_1 = 1; //IC Pin 11
+int latch_1 = 2; //IC Pin 12
+int data_1 = 3; //IC Pin 14
+//FOR CATHODE
+int clock_2 = 8; //IC Pin 11
+int latch_2 = 9; //IC Pin 12
+int data_2 = 10; //IC Pin 14
+
+byte shift_1[]=
+{
+B00110010, B00110010, B00001011, B00110010, B00001011, 
+B00001111, B00110010, B00001011, B00001111, B00010011,
+B00110010, B00001011, B00001111, B00010011, B00001111
+};
+
+byte shift_2[]=
+{
+B01000110, B01000110, B11000000, B01000110, B11000000, 
+B11000000, B01000110, B11000000, B11000000, B11000000,
+B01000110, B11000000, B11000000, B11000000, B11000010
+};
+
+byte shift_3[]=
+{
+B01001000, B01001000, B01000000, B01001000, B01000000, 
+B01000000, B01001000, B01000000, B01000000, B01000000,
+B01001000, B01000000, B01000000, B01000000, B11111000
+};
+
+byte shift_4[]=
+{
+B00000000, B00000000, B00000000, B00000000, B00000000, 
+B00000000, B00000000, B00000000, B00000000, B00000000,
+B00000000, B00000000, B00000000, B00000000, B00000001
+};
+
+byte gnd[]=
+{
+B00000001, B00000001, B00000010, B00000001, B00000010, 
+B00000100, B00000001, B00000010, B00000100, B00001000,
+B00000001, B00000010, B00001000, B00001000, B00010000
+};
+
+del[]=
+{
+100,0,100,0,0,
+100,0,0,0,100,
+0,0,0,0,1000
+};
+
+void setup() 
+{
+pinMode(latch_1, OUTPUT);
+pinMode(clock_1, OUTPUT);
+pinMode(data_1, OUTPUT);
+pinMode(latch_2, OUTPUT);
+pinMode(clock_2, OUTPUT);
+pinMode(data_2, OUTPUT);
+}
+
+int i=0;
+
+void loop() 
+{
+digitalWrite(latch_1, LOW);
+digitalWrite(latch_2, LOW);
+shiftOut(data_1, clock_1, MSBFIRST, shift_4[i]);
+shiftOut(data_1, clock_1, MSBFIRST, shift_3[i]);
+shiftOut(data_1, clock_1, MSBFIRST, shift_2[i]);
+shiftOut(data_1, clock_1, MSBFIRST, shift_1[i]);
+shiftOut(data_2, clock_2, MSBFIRST, gnd[i]);
+digitalWrite(latch_1, HIGH);
+digitalWrite(latch_2, HIGH);
+delay=del[i];
+i++;
+if (i>=15)
+i=0;
+}
